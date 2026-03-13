@@ -582,6 +582,38 @@ const useStore = create<StoreState>()(
         finances: state.finances,
         scenarios: state.scenarios,
       }),
+      onRehydrateStorage: () => {
+        return () => {
+          // After localStorage rehydration, check for Electron file storage
+          if (window.electronAPI?.isElectron) {
+            window.electronAPI.loadData().then((result) => {
+              if (result.success && result.data) {
+                const data = result.data as Record<string, unknown>;
+                useStore.setState({
+                  properties: (data.properties as Property[]) ?? [],
+                  projects: (data.projects as Project[]) ?? [],
+                  people: (data.people as Person[]) ?? [],
+                  finances: (data.finances as FinancialEntry[]) ?? [],
+                  scenarios: (data.scenarios as Scenario[]) ?? [],
+                });
+              }
+            });
+          }
+
+          // Subscribe to state changes and sync to Electron file storage
+          useStore.subscribe((state) => {
+            if (window.electronAPI?.isElectron) {
+              window.electronAPI.saveData({
+                properties: state.properties,
+                projects: state.projects,
+                people: state.people,
+                finances: state.finances,
+                scenarios: state.scenarios,
+              });
+            }
+          });
+        };
+      },
     }
   )
 );
