@@ -50,15 +50,25 @@
   "build": {
     "appId": "com.lifemapper.app",
     "productName": "LifeMapper",
+    "asar": true,
     "directories": {
       "output": "electron-dist"
     },
     "files": [
       "dist/**/*",
-      "electron/**/*"
+      "electron/**/*",
+      "package.json"
     ],
+    "publish": {
+      "provider": "github",
+      "owner": "morbidsteve",
+      "repo": "lifemapper"
+    },
     "mac": {
-      "category": "public.app-category.productivity"
+      "category": "public.app-category.productivity",
+      "target": [
+        "dmg"
+      ]
     },
     "linux": {
       "target": [
