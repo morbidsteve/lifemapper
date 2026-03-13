@@ -66,13 +66,6 @@ interface StoreState {
   importData: (json: string) => void;
   loadSampleData: () => void;
 
-  // Computed selectors
-  getTotalStress: () => number;
-  getCompletionPercentage: () => number;
-  getNetFinancialPosition: () => number;
-  getBlockedProjects: () => Project[];
-  getProjectsByProperty: (propertyId: string) => Project[];
-  getProjectsByStatus: (status: Project['status']) => Project[];
 }
 
 const useStore = create<StoreState>()(
@@ -542,36 +535,6 @@ const useStore = create<StoreState>()(
         });
       },
 
-      // Computed selectors
-      getTotalStress: () => {
-        const { projects } = get();
-        const active = projects.filter((p) => p.status !== 'completed');
-        if (active.length === 0) return 0;
-        const total = active.reduce((sum, p) => sum + p.stressWeight, 0);
-        return Math.round((total / (active.length * 10)) * 100);
-      },
-      getCompletionPercentage: () => {
-        const { projects } = get();
-        if (projects.length === 0) return 0;
-        const completed = projects.filter((p) => p.status === 'completed').length;
-        return Math.round((completed / projects.length) * 100);
-      },
-      getNetFinancialPosition: () => {
-        const { finances } = get();
-        return finances.reduce((net, f) => {
-          if (f.type === 'income' || f.type === 'projected-income') return net + f.amount;
-          return net - f.amount;
-        }, 0);
-      },
-      getBlockedProjects: () => {
-        return get().projects.filter((p) => p.status === 'blocked');
-      },
-      getProjectsByProperty: (propertyId) => {
-        return get().projects.filter((p) => p.propertyId === propertyId);
-      },
-      getProjectsByStatus: (status) => {
-        return get().projects.filter((p) => p.status === status);
-      },
     }),
     {
       name: 'lifemapper-storage',

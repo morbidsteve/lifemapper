@@ -1,19 +1,18 @@
 import { Settings, Download, Upload, Database } from 'lucide-react';
 import { useRef, useState } from 'react';
 import useStore from '../store/useStore';
+import { useTotalStress, useCompletionPercentage } from '../hooks/useSelectors';
 
 export default function TopBar() {
   const projects = useStore((s) => s.projects);
-  const getTotalStress = useStore((s) => s.getTotalStress);
-  const getCompletionPercentage = useStore((s) => s.getCompletionPercentage);
   const exportData = useStore((s) => s.exportData);
   const importData = useStore((s) => s.importData);
   const loadSampleData = useStore((s) => s.loadSampleData);
   const [showSettings, setShowSettings] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const completionPct = getCompletionPercentage();
-  const stressPct = getTotalStress();
+  const completionPct = useCompletionPercentage();
+  const stressPct = useTotalStress();
   const activeCount = projects.filter((p) => p.status !== 'completed').length;
 
   const handleExport = () => {

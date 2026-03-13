@@ -21,6 +21,7 @@ import {
   Activity,
 } from 'lucide-react';
 import useStore from '../store/useStore';
+import { useTotalStress, useCompletionPercentage, useBlockedProjects } from '../hooks/useSelectors';
 
 const STATUS_COLORS: Record<string, string> = {
   'not-started': '#B2BEC3',
@@ -35,15 +36,12 @@ export default function DashboardView() {
   const projects = useStore((s) => s.projects);
   const properties = useStore((s) => s.properties);
   const finances = useStore((s) => s.finances);
-  const getTotalStress = useStore((s) => s.getTotalStress);
-  const getCompletionPercentage = useStore((s) => s.getCompletionPercentage);
-  const getBlockedProjects = useStore((s) => s.getBlockedProjects);
   const setSelectedProjectId = useStore((s) => s.setSelectedProjectId);
   const setShowProjectModal = useStore((s) => s.setShowProjectModal);
 
-  const totalStress = getTotalStress();
-  const completionPct = getCompletionPercentage();
-  const blocked = getBlockedProjects();
+  const totalStress = useTotalStress();
+  const completionPct = useCompletionPercentage();
+  const blocked = useBlockedProjects();
 
   // Financial calculations
   const totalPropertyValue = properties.reduce((sum, p) => sum + p.estimatedValue, 0);

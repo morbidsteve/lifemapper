@@ -1,13 +1,13 @@
 import { Home, MapPin, TrendingUp, ChevronRight } from 'lucide-react';
 import type { Property } from '../types';
-import useStore from '../store/useStore';
+import { useProjectsByProperty } from '../hooks/useSelectors';
 
 interface PropertyCardProps {
   property: Property;
 }
 
 export default function PropertyCard({ property }: PropertyCardProps) {
-  const projects = useStore((s) => s.getProjectsByProperty(property.id));
+  const projects = useProjectsByProperty(property.id);
   const activeProjects = projects.filter((p) => p.status !== 'completed');
   const completedProjects = projects.filter((p) => p.status === 'completed');
   const equity = property.estimatedValue - property.mortgageBalance;
