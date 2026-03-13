@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    transition-property: color, background-color, border-color, opacity, box-shadow;
+    transition-duration: 150ms;
+    transition-timing-function: ease-in-out;
+  }
+
+  body {
+    margin: 0;
+    background-color: #FAF8F5;
+    color: #2D3436;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  #root {
+    min-height: 100vh;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #FAF8F5;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #B8D1BC;
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #9BB5A0;
+  }
+
+  /* Firefox scrollbar */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #B8D1BC #FAF8F5;
+  }
+}
+
+@layer components {
+  .modal-backdrop {
+    @apply fixed inset-0 bg-black/30 backdrop-blur-sm z-40;
+  }
+
+  .modal-content {
+    @apply fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-surface rounded-xl shadow-xl z-50 p-6 max-h-[90vh] overflow-y-auto;
+  }
+
+  .btn-primary {
+    @apply bg-primary text-white px-4 py-2 rounded-lg font-medium hover:bg-primary-dark active:scale-95;
+  }
+
+  .btn-secondary {
+    @apply bg-primary-50 text-primary-dark px-4 py-2 rounded-lg font-medium hover:bg-primary-100 active:scale-95;
+  }
+
+  .btn-accent {
+    @apply bg-accent text-white px-4 py-2 rounded-lg font-medium hover:bg-accent-dark active:scale-95;
+  }
+
+  .card {
+    @apply bg-surface rounded-xl shadow-sm border border-primary-50 p-4;
+  }
+}
