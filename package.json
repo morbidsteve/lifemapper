@@ -1,7 +1,12 @@
 {
-  "name": "lifemapper-tmp",
+  "name": "lifemapper",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
+  "description": "Visual life planning tool for managing properties, projects, and the path to peace of mind",
+  "author": {
+    "name": "morbidsteve",
+    "email": "morbidsteve@users.noreply.github.com"
+  },
   "type": "module",
   "main": "electron/main.js",
   "scripts": {
